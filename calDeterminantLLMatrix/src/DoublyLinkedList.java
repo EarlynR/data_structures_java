@@ -10,6 +10,7 @@
 import java.lang.NullPointerException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.*;
 
 
 /**
@@ -17,7 +18,8 @@ import java.io.IOException;
  */
 public class DoublyLinkedList {
 
-    private int size = 0;
+    private int numNodes = 0;
+    private int sizeMatrix = 0;
     private Node head = null;
     private Node tail = null;
 
@@ -29,14 +31,17 @@ public class DoublyLinkedList {
     public DoublyLinkedList() {
     }
 
+
     /**
-     * Get the size of the list
+     * Retrieve the size of the linked list.
      *
-     * @return int -  contains the number of nodes in a list.
+     * @return - int that says what size is the linked list.
      */
     public int getSize(){
 
-        return size;
+        sizeMatrix = (int) Math.sqrt(numNodes);
+
+        return sizeMatrix;
     }
 
     /**
@@ -84,13 +89,14 @@ public class DoublyLinkedList {
             tail = newNode;
         }
 
-        size++;
+        numNodes++;
     }
 
     /**
      * Print linked list
      */
     public void printLinkedList() {
+
         if (isEmpty() == true) {
 
             System.out.println("The matrix is empty.");
@@ -99,11 +105,110 @@ public class DoublyLinkedList {
 
             Node curr = head;
 
+            int row = head.row;
+
             while (curr != null){
-                curr.printNode();
-                curr = curr.next;
+
+                if (row == curr.row){
+
+                    curr.printNodeDataOnly();
+                    curr = curr.next;
+                }
+
+                else {
+
+                    System.out.println(); // Print new line indicating new row.
+                    curr.printNodeDataOnly();
+                    row = curr.row;       // Set row to the new, subsequent row.
+                    curr = curr.next;
+                }
             }
         }
     }
+
+    /**
+     * Extract the minor for the determinant. All nodes will have the same
+     * data as the major matrix, but the rows and columns will follow the
+     * order of the minor matrix.
+     *
+     * @param row
+     * @param col
+     * @return
+     */
+    public DoublyLinkedList extractMinor(int row, int col, DoublyLinkedList
+            matrix){
+
+
+        DoublyLinkedList minor = new DoublyLinkedList();
+        Node nodeToAdd;
+
+        Node curr = matrix.getHead();
+
+
+        while (curr != null){
+
+
+            if (curr.row != row && curr.col != col){
+
+                nodeToAdd = new Node(curr);
+                minor.addNode(nodeToAdd);
+
+            }
+
+            curr = curr.next;
+        }
+
+        return minor;
+    }
+
+    /**
+     * Calculate the determinant of the matrix
+     *
+     * @param matrix - a matrix made up of a doubly linked list.
+     * @return int that is the determinant.
+     */
+    public int calculateDeterminant(DoublyLinkedList matrix) {
+
+        int determinant = 0;
+
+        Node curr = matrix.getHead();
+
+        // Base Case
+        if (matrix.getSize() == 1) {
+
+            determinant = curr.data;
+
+        }
+        else { // Recursive Case
+
+            for (int col = 1; col <= matrix.getSize(); col++) {
+
+                // Get the minor (cofactor) for the recursive part
+                DoublyLinkedList minor = extractMinor(curr.row, curr.col, matrix);
+
+
+                System.out.println("Col: " + curr.col);
+                System.out.println("Minor Size: " + minor.getSize());
+                minor.printLinkedList();
+                System.out.println();
+                curr.printNodeData();
+                curr.printNodePower();
+                System.out.println();
+
+                // Calculate the determinant
+               //  Recursive solution
+
+                determinant = determinant + (curr.power * curr.data * calculateDeterminant(minor));
+
+                curr = curr.next;
+                System.out.println("Determinant: " + determinant);
+
+
+            }
+        }
+
+        return determinant;
+    }
+
 
 }

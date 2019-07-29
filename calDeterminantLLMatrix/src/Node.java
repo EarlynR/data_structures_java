@@ -13,9 +13,10 @@ import java.io.IOException;
  */
 public class Node {
 
-    private int row;
-    private int col;
-    private int data;
+    public int row;
+    public int col;
+    public int data;
+    public int power;
 
     public Node next;
     public Node prev;
@@ -32,8 +33,33 @@ public class Node {
         this.row = row;
         this.col = col;
         this.data = data;
+        this.power = calculatePower();
         this.next = null;
         this.prev = null;
+
+    }
+
+    /**
+     * Make a new node out of an existing node.
+     * Essentially, this method creates a copy
+     *
+     * @param existingNode - A node with information
+     */
+    Node(Node existingNode){
+
+        this.row = existingNode.row;
+        this.col = existingNode.col;
+        this.data = existingNode.data;
+        this.power = calculatePower();
+        this.next = null;
+        this.prev = null;
+    }
+
+    /**
+     * Print the node data only without additional text
+     */
+    void printNodeDataOnly(){
+        System.out.print(data + " ");
     }
 
     /**
@@ -42,8 +68,64 @@ public class Node {
      *
      * Print the data that is incorporated into the Node class.
      */
-    void printNode() {
-        System.out.println(data);
-        System.out.print(" ");
+    void printNodeData() {
+        System.out.println("Data: " + data);
     }
+
+    /**
+     * Print the row of the Node
+     */
+    void printNodeRow(){
+        System.out.println("Row: " + row);
+    }
+
+    /**
+     * Print the column of the Node
+     */
+    void printNodeCol(){
+        System.out.println("Column: " + col);
+    }
+
+    /**
+     * Print the power of the Node. Helpful for troubleshooting.
+     */
+    public void printNodePower(){
+
+        System.out.println("Power: " + power);
+
+    }
+
+    /**
+     * Print all information about the Node for user
+     */
+    void printNodeInfo(){
+        printNodeData();
+        printNodeRow();
+        printNodeCol();
+    }
+
+    /**
+     * Calculate the power for the determinant formula:
+     * (-1) ^ (row + col)
+     *
+     * @return int - result of the above calculation
+     */
+    public int calculatePower(){
+
+        int exponent = row + col;
+        int base = -1;
+        int power = 1;
+
+        while (exponent >= 1){
+
+            power *= base  ;
+            exponent--;
+
+        }
+
+        return power;
+    }
+
+
+
 }
