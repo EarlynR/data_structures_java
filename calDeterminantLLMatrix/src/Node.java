@@ -13,13 +13,13 @@ import java.io.IOException;
  */
 public class Node {
 
-    public int row;
-    public int col;
-    public int data;
-    public int power;
+    public int row;   // Row location in the "matrix"
+    public int col;   // Column location in the "matrix"
+    public int data;  // Actual value within location of the "matrix"
+    public int power; // (-1) ^ (row + col)
 
-    public Node next;
-    public Node prev;
+    public Node next; // Next node
+    public Node prev; // Previous node
 
     /**
      * Create a node with the row, col, data, previous Node, and next Node.
@@ -68,6 +68,8 @@ public class Node {
         int exponent = row + col;
         int base = -1;
 
+        // Calculate the power for the
+        // part of the determinant formula: -1 ^ (row + col)
         while (exponent >= 1){
 
             this.power *= base  ;
@@ -77,7 +79,9 @@ public class Node {
     }
 
     /**
-     * Print the node data only without additional text
+     * Print the node data only without additional text.
+     *
+     * Use this to print contents of matrix.
      */
     void printNodeDataOnly(){
         System.out.print(data + " ");
@@ -94,14 +98,16 @@ public class Node {
     }
 
     /**
-     * Print the row of the Node
+     * Print the row of the Node. Shows us which row the node resides in the
+     * matrix.
      */
     void printNodeRow(){
         System.out.println("Row: " + row);
     }
 
     /**
-     * Print the column of the Node
+     * Print the column of the Node.
+     * Shows us which column the node is in the matrix.
      */
     void printNodeCol(){
         System.out.println("Column: " + col);
@@ -123,6 +129,7 @@ public class Node {
         printNodeData();
         printNodeRow();
         printNodeCol();
+        printNodePower();
     }
 
 }

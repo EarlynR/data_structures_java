@@ -7,19 +7,18 @@
 *
 *
 */
-import java.lang.NullPointerException;
-import java.io.FileWriter;
-import java.io.IOException;
+
 import java.lang.*;
 
-
 /**
- * Create a doubly linked list
+ * Create a doubly linked list with headers.
+ *
+ * There are not dummy header or tail nodes.
  */
 public class DoublyLinkedList {
 
     private int numNodes = 0;
-    private int sizeMatrix = 0;
+    private double sizeMatrix = 0;
     private int determinant;
     private Node head = null;
     private Node tail = null;
@@ -33,67 +32,121 @@ public class DoublyLinkedList {
     }
 
     /**
-     * Retrieve the size of the linked list.
+     * Retrieve the size of the linked list. The size is equivalent to the m
+     * in the mxm matrix.
      *
      * @return - int that says what size is the linked list.
      */
     public int getSize(){
 
-        sizeMatrix = (int) Math.sqrt(numNodes);
-
-        return sizeMatrix;
+        return (int) sizeMatrix;
     }
 
     /**
-     * Get the head node of the stack. The first who entered.
+     * Set the size of the matrix.
+     *
+     * In linear algebra, a square matrix is size m x m (m^2 = nodes (n)).
+     * M^2 is the size of the linked list but we need size m. So, we take the
+     * square root.
+     *
+     */
+    public void setSize(){
+
+        sizeMatrix = Math.sqrt(numNodes);
+
+    }
+
+    /**
+     * Get the head node of the stack. The first that is entered.
      *
      * @return Node - Node that is the head of the list.
      */
     public Node getHead(){
+
         return head;
     }
 
     /**
-     * Get the tail node of the list.
+     * Get the tail node of the list. This is the last node in the linked
+     * list. The tail node is only the first node if there is one node in the
+     * linked list.
      *
      * @return Node - Node that is the tail of the list.
      */
     public Node getTail(){
+
         return tail;
     }
 
     /**
+     * Check to see if the linked list is empty. Head should be null. Tail
+     * will automatically be null as well.
+     *
      * @return boolean - tells the user whether or not there are any nodes in
      * the linked list.
      */
     public boolean isEmpty() {
-        return head == null;
+
+        return head == null && tail == null;
     }
 
     /**
-     * Add new node to list
+     * Check the size of the "matrix". Since the matrix is
+     * size (m x m), the linked list size if m^2 = nodes (n).
      *
-     * @param newNode - Node containing part of the infomration of the matrix
+     * If we take the square root, we should have n. If it's a decimal, then
+     * the size is m.xx, which means that the matrix is not square (complete).
+     *
+     * @return
+     */
+    public boolean checkSize(){
+
+        if (sizeMatrix % 1 == 0){
+
+            return true;
+
+        }
+        else {
+
+            return false;
+        }
+
+    }
+
+    /**
+     * Add new node to list. This will change the tail node and provide the
+     * correct link for the new node.
+     *
+     * @param newNode - Node containing part of the information of the matrix
      */
     public void addNode(Node newNode) {
 
         if (isEmpty()) {
 
+            // Add a new node which will be the head and tail at the same time.
             head = newNode;
             tail = newNode;
         }
         else {
 
+            // Add a new node to an unempty linked list.
+            // There will be a new tail so the old tail will have a new link.
             tail.next = newNode;
             newNode.prev = tail;
             tail = newNode;
         }
 
+        // Increase number of nodes.
         numNodes++;
+
+        // Set the size (n in the n X n matrix)
+        setSize();
     }
 
     /**
-     * Print linked list
+     * Print linked list contents
+     *
+     * Use this if you only want the data attribute of the nodes.
      */
     public void printLinkedListContents() {
 
@@ -107,6 +160,7 @@ public class DoublyLinkedList {
 
             int row = head.row;
 
+            // Iterate through the linked list, print each node one by one.
             while (curr != null){
 
                 if (row == curr.row){
@@ -117,25 +171,24 @@ public class DoublyLinkedList {
 
                 else {
 
-                    System.out.println(); // Print new line indicating new row.
+                    // Print new line indicating new row.
+                    System.out.println();
                     curr.printNodeDataOnly();
-                    row = curr.row;       // Set row to the new, subsequent row.
+
+                    // Set row to the new, subsequent row.
+                    row = curr.row;
                     curr = curr.next;
                 }
             }
+
+            System.out.println();
         }
     }
 
     /**
-     * Print the determinant
-     */
-    public void printDeterminant(){
-
-        System.out.println("Determinant: " + determinant);
-    }
-
-    /**
      * Print all information about each node in LinkedList
+     *
+     * Use this if you want details information about the nodes.
      *
      */
     public void printLinkedListContentsDetailed(){
@@ -150,6 +203,7 @@ public class DoublyLinkedList {
 
             int row = head.row;
 
+            // Iterate through the linked list, print each node one by one.
             while (curr != null){
 
                 if (row == curr.row){
@@ -160,13 +214,25 @@ public class DoublyLinkedList {
 
                 else {
 
-                    System.out.println(); // Print new line indicating new row.
+                    // Print new line indicating new row.
+                    System.out.println();
                     curr.printNodeInfo();
-                    row = curr.row;       // Set row to the new, subsequent row.
+
+                    // Set row to the new, subsequent row.
+                    row = curr.row;
                     curr = curr.next;
                 }
             }
         }
+    }
+
+    /**
+     * Print the determinant for user. Only applicable for square matrices.
+     */
+    public void printDeterminant(){
+
+        System.out.println("Determinant: " + determinant);
+
     }
 
     /**
@@ -182,15 +248,21 @@ public class DoublyLinkedList {
         }
         else{
 
+            // Reorder the "matrix", starting with location [1, 1]
             int newRow = 1;
             int newCol = 1;
             Node curr;
 
             curr = head;
+
+            // Use to check whether or not the row
+            // has change
             int prevRow = curr.row;
 
             while (curr != null){
 
+                // Row has changed, need to start a "new" row.
+                // Restart the column as one since the row is empty.
                 if (prevRow != curr.row){
 
                     prevRow = curr.row;
@@ -200,7 +272,10 @@ public class DoublyLinkedList {
                     curr.col = newCol;
                     newCol++;
 
-                } else {
+                }
+                // The node belongs in the same row as the previous one.
+                // Add it in a new column.
+                else {
 
                     curr.row = newRow;
                     curr.col = newCol;
@@ -208,6 +283,7 @@ public class DoublyLinkedList {
 
                 }
 
+                // Reset the power
                 curr.setPower();
                 curr = curr.next;
 
@@ -231,31 +307,37 @@ public class DoublyLinkedList {
 
 
         DoublyLinkedList minor = new DoublyLinkedList();
-        Node nodeToAdd;
+        Node tempNode;
 
         Node curr = matrix.getHead();
 
-
+        // Iterate through the original linked list
+        // Grab only what is needed.
         while (curr != null){
 
-
+            // Grab the node if it doesn't belong to the
+            // column or row of the main node in the determinant formula
+            // Node can't be part of the same row and column.
             if (curr.row != row && curr.col != col){
 
-                nodeToAdd = new Node(curr);
-                minor.addNode(nodeToAdd);
+                tempNode = new Node(curr);
+                minor.addNode(tempNode);
 
             }
 
             curr = curr.next;
         }
 
+        // Reorder their location since nodes are now
+        // a part of a new matrix.
         minor.reOrderLinkedList();
 
         return minor;
     }
 
     /**
-     * Calculate the determinant of the matrix
+     * Calculate the determinant of the matrix. This will use the power, the
+     * data value, and the minor. This method is recursive.
      *
      * @param matrix - a matrix made up of a doubly linked list.
      * @return int that is the determinant.
@@ -279,30 +361,16 @@ public class DoublyLinkedList {
                 // Get the minor (cofactor) for the recursive part
                 DoublyLinkedList minor = extractMinor(curr.row, curr.col, matrix);
 
-
-                System.out.println("Col: " + curr.col);
-                System.out.println("Minor Size: " + minor.getSize());
-                minor.printLinkedListContents();
-                System.out.println();
-                curr.printNodeData();
-                curr.printNodePower();
-                System.out.println();
-
                 // Calculate the determinant
-               //  Recursive solution
-
+                //  Recursive solution
                 determinant = determinant + (curr.power * curr.data *
                         calculateDeterminant(minor));
 
                 curr = curr.next;
-                System.out.println("Determinant: " + determinant);
-
-
             }
         }
 
         return determinant;
     }
-
 
 }
