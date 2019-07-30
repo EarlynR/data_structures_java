@@ -9,7 +9,9 @@
 *
  */
 
-//TODO: Fix the determinant method.
+//TODO: Add in code to take in files.
+//TODO: Add inline comments.
+//TODO: Create method to print determinant.
 
 public class matrixDeterminants{
 
@@ -26,24 +28,17 @@ public class matrixDeterminants{
 */
 
 
-        matrix.addNode(new Node(1, 1, 3));
-        matrix.addNode(new Node(1, 2, 5));
-        matrix.addNode(new Node(1, 3, 8));
+        matrix.addNode(new Node(1, 1, -1));
+        matrix.addNode(new Node(1, 2, -2));
+        matrix.addNode(new Node(1, 3, -3));
         matrix.addNode(new Node(2, 1, 4));
-        matrix.addNode(new Node(2, 2, 9));
-        matrix.addNode(new Node(2, 3, 7));
-        matrix.addNode(new Node(3, 1, 2));
-        matrix.addNode(new Node(3, 2, -1));
-        matrix.addNode(new Node(3, 3, 0));
+        matrix.addNode(new Node(2, 2, -5));
+        matrix.addNode(new Node(2, 3, 6));
+        matrix.addNode(new Node(3, 1, -7));
+        matrix.addNode(new Node(3, 2, 8));
+        matrix.addNode(new Node(3, 3, -9));
 
+        matrix.calculateDeterminant(matrix);
 
-
-        System.out.println("Matrix: ");
-        matrix.printLinkedList();
-        //System.out.println("Matrix size: " + matrix.getSize());
-        System.out.println();
-
-        System.out.println("Determinant: " + matrix.calculateDeterminant
-                (matrix));
     }
 }

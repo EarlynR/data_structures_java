@@ -20,6 +20,7 @@ public class DoublyLinkedList {
 
     private int numNodes = 0;
     private int sizeMatrix = 0;
+    private int determinant;
     private Node head = null;
     private Node tail = null;
 
@@ -30,7 +31,6 @@ public class DoublyLinkedList {
      */
     public DoublyLinkedList() {
     }
-
 
     /**
      * Retrieve the size of the linked list.
@@ -95,7 +95,7 @@ public class DoublyLinkedList {
     /**
      * Print linked list
      */
-    public void printLinkedList() {
+    public void printLinkedListContents() {
 
         if (isEmpty() == true) {
 
@@ -124,6 +124,97 @@ public class DoublyLinkedList {
                 }
             }
         }
+    }
+
+    /**
+     * Print the determinant
+     */
+    public void printDeterminant(){
+
+        System.out.println("Determinant: " + determinant);
+    }
+
+    /**
+     * Print all information about each node in LinkedList
+     *
+     */
+    public void printLinkedListContentsDetailed(){
+
+        if (isEmpty() == true) {
+
+            System.out.println("The matrix is empty.");
+
+        } else {
+
+            Node curr = head;
+
+            int row = head.row;
+
+            while (curr != null){
+
+                if (row == curr.row){
+
+                    curr.printNodeInfo();
+                    curr = curr.next;
+                }
+
+                else {
+
+                    System.out.println(); // Print new line indicating new row.
+                    curr.printNodeInfo();
+                    row = curr.row;       // Set row to the new, subsequent row.
+                    curr = curr.next;
+                }
+            }
+        }
+    }
+
+    /**
+     * Reorder each of the nodes with a new column and row, starting with row
+     * = 1 and column = 1. Also, recalculate the power with the node's new
+     * location.
+     */
+    public void reOrderLinkedList(){
+
+        if (isEmpty()){
+
+            return;
+        }
+        else{
+
+            int newRow = 1;
+            int newCol = 1;
+            Node curr;
+
+            curr = head;
+            int prevRow = curr.row;
+
+            while (curr != null){
+
+                if (prevRow != curr.row){
+
+                    prevRow = curr.row;
+                    newRow++;
+                    newCol = 1;
+                    curr.row = newRow;
+                    curr.col = newCol;
+                    newCol++;
+
+                } else {
+
+                    curr.row = newRow;
+                    curr.col = newCol;
+                    newCol++;
+
+                }
+
+                curr.setPower();
+                curr = curr.next;
+
+            }
+
+        }
+
     }
 
     /**
@@ -158,6 +249,8 @@ public class DoublyLinkedList {
             curr = curr.next;
         }
 
+        minor.reOrderLinkedList();
+
         return minor;
     }
 
@@ -167,9 +260,9 @@ public class DoublyLinkedList {
      * @param matrix - a matrix made up of a doubly linked list.
      * @return int that is the determinant.
      */
-    public int calculateDeterminant(DoublyLinkedList matrix) {
+    public int calculateDeterminant(DoublyLinkedList matrix){
 
-        int determinant = 0;
+        determinant = 0;
 
         Node curr = matrix.getHead();
 
@@ -189,7 +282,7 @@ public class DoublyLinkedList {
 
                 System.out.println("Col: " + curr.col);
                 System.out.println("Minor Size: " + minor.getSize());
-                minor.printLinkedList();
+                minor.printLinkedListContents();
                 System.out.println();
                 curr.printNodeData();
                 curr.printNodePower();
@@ -198,7 +291,8 @@ public class DoublyLinkedList {
                 // Calculate the determinant
                //  Recursive solution
 
-                determinant = determinant + (curr.power * curr.data * calculateDeterminant(minor));
+                determinant = determinant + (curr.power * curr.data *
+                        calculateDeterminant(minor));
 
                 curr = curr.next;
                 System.out.println("Determinant: " + determinant);

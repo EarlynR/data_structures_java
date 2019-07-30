@@ -33,7 +33,7 @@ public class Node {
         this.row = row;
         this.col = col;
         this.data = data;
-        this.power = calculatePower();
+        setPower();
         this.next = null;
         this.prev = null;
 
@@ -50,9 +50,30 @@ public class Node {
         this.row = existingNode.row;
         this.col = existingNode.col;
         this.data = existingNode.data;
-        this.power = calculatePower();
+        setPower();
         this.next = null;
         this.prev = null;
+    }
+
+    /**
+     * Calculate the power for the determinant formula:
+     * (-1) ^ (row + col)
+     *
+     * @return int - result of the above calculation
+     */
+    public void setPower(){
+
+        this.power = 1;
+
+        int exponent = row + col;
+        int base = -1;
+
+        while (exponent >= 1){
+
+            this.power *= base  ;
+            exponent--;
+
+        }
     }
 
     /**
@@ -103,29 +124,5 @@ public class Node {
         printNodeRow();
         printNodeCol();
     }
-
-    /**
-     * Calculate the power for the determinant formula:
-     * (-1) ^ (row + col)
-     *
-     * @return int - result of the above calculation
-     */
-    public int calculatePower(){
-
-        int exponent = row + col;
-        int base = -1;
-        int power = 1;
-
-        while (exponent >= 1){
-
-            power *= base  ;
-            exponent--;
-
-        }
-
-        return power;
-    }
-
-
 
 }
