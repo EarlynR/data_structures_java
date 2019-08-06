@@ -1,0 +1,14 @@
+Matrix 1 has determinant 5
+Matrix 2 has determinant 3
+Matrix 3 has determinant 64
+Matrix 4 has determinant 270
+Matrix 5 has determinant 0
+Matrix 6 has determinant 270
+Matrix 7 has determinant 0
+Matrix 8 has determinant 0
+Matrix 9 has determinant 0
+Matrix 10 has determinant 0
+Matrix 11 has determinant 4530
+Matrix 12 has determinant 0
+Matrix 13 has determinant -5
+Matrix 14 has determinant -43
