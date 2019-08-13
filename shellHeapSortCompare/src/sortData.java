@@ -37,19 +37,20 @@ public class sortData{
         String         inputFileName; // Name of file being sorted.
         String         ouputFileName; // Name of file containing results.
         String         tempLine;      // Line in file to read.
-        int             tempInt;
+        int            tempInt;       // Placeholder to hold value from file
 
-        List<Integer> arrayInt = new ArrayList<>(); // Array list of ints
+        ArrayList<Integer> arrayInt = new ArrayList<Integer>(); // Array list of ints
                                                         // to sort
-        List<Integer> sortedShell = new ArrayList<>(); // Sorted array
+        ArrayList<Integer> sortedShell = new ArrayList<Integer>(); // Sorted array
         // done by shell sort
-        List<Integer> sortedHeap = new ArrayList<>(); // Sorted array
+        ArrayList<Integer> sortedHeap = new ArrayList<Integer>(); // Sorted array
         // done by heap sort
 
         Date            startTime;    // Start time for sorting
         Date            endTime;      // End time for sorting
         long            seconds;      // Time difference for sorting.
 
+        sortingAlgorithms sortEngine = new sortingAlgorithms();
 
 
         // Open the directory that contains the files to sort
@@ -130,12 +131,21 @@ public class sortData{
                 }
 
 
-                // Sort data with shell sort
 
 
                 // Sort data with heap sort
+                sortedHeap = sortEngine.heapSort(arrayInt,
+                                                    arrayInt.size());
 
+                System.out.println("Heap Sorted: ");
+                System.out.println(Arrays.deepToString(sortedHeap.toArray()));
 
+/*
+                System.out.println(Arrays.deepToString(arrayInt.toArray()));
+                sortedShell = sortEngine.shellSort(arrayInt, 3);
+                System.out.println("Shell Sorted: ");
+                System.out.println(Arrays.deepToString(sortedShell.toArray()));
+*/
             }
         }
     }
