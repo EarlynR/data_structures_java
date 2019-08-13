@@ -12,6 +12,9 @@
 */
 
 //TODO: Check if sorts are equal to make sure it's correct
+//TODO: Change return statements for methods that swap elements in place
+//TODO: Add code to only save results less than or equal to 50 records
+//TODO: Remove extraneous print statements
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -41,8 +44,22 @@ public class sortData{
 
         ArrayList<Integer> arrayInt = new ArrayList<Integer>(); // Array list of ints
                                                         // to sort
-        ArrayList<Integer> sortedShell = new ArrayList<Integer>(); // Sorted array
-        // done by shell sort
+        ArrayList<Integer> sortedShellSeq1 = new ArrayList<Integer>(); // Sorted
+        // array
+        // done by shell sort with sequence 1
+
+        ArrayList<Integer> sortedShellSeq2 = new ArrayList<Integer>(); // Sorted
+        // array
+        // done by shell sort with sequence 2
+
+        ArrayList<Integer> sortedShellSeq3 = new ArrayList<Integer>(); // Sorted
+        // array
+        // done by shell sort with sequence 3
+
+        ArrayList<Integer> sortedShellSeq4 = new ArrayList<Integer>(); // Sorted
+        // array
+        // done by shell sort with sequence 4
+
         ArrayList<Integer> sortedHeap = new ArrayList<Integer>(); // Sorted array
         // done by heap sort
 
@@ -130,22 +147,49 @@ public class sortData{
                     }
                 }
 
-
-
+                // Deep copy original array to arrays created for sorting
+                // algorithms
+                sortedHeap = sortEngine.copyArrayList(arrayInt);
+                sortedShellSeq1 = sortEngine.copyArrayList(arrayInt);
+                sortedShellSeq2 = sortEngine.copyArrayList(arrayInt);
+                sortedShellSeq3 = sortEngine.copyArrayList(arrayInt);
+                sortedShellSeq4 = sortEngine.copyArrayList(arrayInt);
 
                 // Sort data with heap sort
-                sortedHeap = sortEngine.heapSort(arrayInt,
-                                                    arrayInt.size());
-
+                sortedHeap = sortEngine.heapSort(sortedHeap, arrayInt.size());
                 System.out.println("Heap Sorted: ");
                 System.out.println(Arrays.deepToString(sortedHeap.toArray()));
 
-/*
-                System.out.println(Arrays.deepToString(arrayInt.toArray()));
-                sortedShell = sortEngine.shellSort(arrayInt, 3);
+                // Sort data with shell sort with first sequence
+                sortedShellSeq1 = sortEngine.shellSort(sortedShellSeq1, 1);
                 System.out.println("Shell Sorted: ");
-                System.out.println(Arrays.deepToString(sortedShell.toArray()));
-*/
+                System.out.println(Arrays.deepToString(sortedShellSeq1.toArray()));
+
+                // Sort data with shell sort with second sequence
+                sortedShellSeq2 = sortEngine.shellSort(sortedShellSeq2, 2);
+                System.out.println("Shell Sorted: ");
+                System.out.println(Arrays.deepToString
+                        (sortedShellSeq2.toArray()));
+
+                // Sort data with shell sort with third sequence
+                sortedShellSeq3 = sortEngine.shellSort(sortedShellSeq3, 3);
+                System.out.println("Shell Sorted: ");
+                System.out.println(Arrays.deepToString
+                        (sortedShellSeq3.toArray()));
+
+
+                // Sort data with shell sort with fourth sequence
+                sortedShellSeq4 = sortEngine.shellSort(sortedShellSeq4, 4);
+                System.out.println("Shell Sorted: ");
+                System.out.println(Arrays.deepToString
+                        (sortedShellSeq4.toArray()));
+
+                // Save results if file size is less than 50
+                if (arrayInt.size() <= 50){
+
+
+                }
+
             }
         }
     }

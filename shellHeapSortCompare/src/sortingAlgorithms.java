@@ -72,6 +72,28 @@ public class sortingAlgorithms{
 
     }
 
+    /**
+     * COPY an array list so the original one is not modified
+     *
+     * @param arrayToCopy - an arrayList to clone
+     * @return an copied array list. Has different reference than original
+     *
+     */
+    public ArrayList<Integer> copyArrayList(ArrayList<Integer> arrayToCopy){
+
+        // Placeholder for new array list to store contents of original
+        ArrayList<Integer> copiedArrayList = new ArrayList<Integer>();
+
+        // Go through original array, element by element
+        // and add element to
+        for (Integer a: arrayToCopy){
+
+            copiedArrayList.add(a);
+        }
+
+        return copiedArrayList;
+
+    }
 
     /**
      * In the shell sort choose the starting increment
@@ -189,8 +211,6 @@ public class sortingAlgorithms{
             // Use first sequence
             case 1:
 
-                System.out.println("Option 1!");
-
                 // Determine starting sequence
                 startingIndexSeq = chooseStartingIncrement(arrayToSort,
                     knutSeqOrg);
@@ -202,8 +222,6 @@ public class sortingAlgorithms{
 
                 // Go through each element in sequence
                 for (int seq1GapVal: tempSeq){
-
-                    System.out.println("Gap Value: " + seq1GapVal);
 
                     for (int i = 0; i < seq1GapVal; i++){
 
@@ -217,8 +235,6 @@ public class sortingAlgorithms{
             // Use second sequence
             case 2:
 
-                System.out.println("Option 2!");
-
                 // Determine starting sequence
                 startingIndexSeq = chooseStartingIncrement(arrayToSort,
                         seqTwo);
@@ -230,8 +246,6 @@ public class sortingAlgorithms{
 
                 // Go through each element in sequence
                 for (int seq2GapVal: tempSeq){
-
-                    System.out.println("Gap Value: " + seq2GapVal);
 
                     for (int i = 0; i < seq2GapVal; i++){
 
@@ -245,8 +259,6 @@ public class sortingAlgorithms{
             // Use third sequence
             case 3:
 
-                System.out.println("Option 3!");
-
                 // Determine starting sequence
                 startingIndexSeq = chooseStartingIncrement(arrayToSort,
                         seqThree);
@@ -258,8 +270,6 @@ public class sortingAlgorithms{
 
                 // Go through each element in sequence
                 for (int seq3GapVal: tempSeq){
-
-                    System.out.println("Gap Value: " + seq3GapVal);
 
                     for (int i = 0; i < seq3GapVal; i++){
 
@@ -273,8 +283,6 @@ public class sortingAlgorithms{
             // Use fourth sequence
             case 4:
 
-                System.out.println("Option 4!");
-
                 // Determine starting sequence
                 startingIndexSeq = chooseStartingIncrement(arrayToSort,
                         seqFour);
@@ -286,8 +294,6 @@ public class sortingAlgorithms{
 
                 // Go through each element in sequence
                 for (int seq4GapVal: tempSeq){
-
-                    System.out.println("Gap Value: " + seq4GapVal);
 
                     for (int i = 0; i < seq4GapVal; i++){
 
@@ -317,11 +323,9 @@ public class sortingAlgorithms{
 
 
         // Heapify the array
-        for (int i = arraySize / 2 - 1; i >= 0; i--) {
 
-            arrayToSort = heapifyRecursive(i, arrayToSort, arraySize);
+        arrayToSort = heapifyIterative(arrayToSort, arrayToSort.size());
 
-        }
 
         // Sort the array by switching places
         for (int i = arraySize - 1; i > 0; i--) {
@@ -330,7 +334,7 @@ public class sortingAlgorithms{
             arrayToSort.set(0, arrayToSort.get(i));
             arrayToSort.set(i, tempInt);
 
-            arrayToSort = heapify(0, arrayToSort, i);
+            arrayToSort = heapifyIterative(arrayToSort, i);
 
         }
 
@@ -404,7 +408,7 @@ public class sortingAlgorithms{
 
                 childIndex = 2 * nodeIndex + 1;
 
-                return heapify(nodeIndex, arrayToSort, arraySize);
+                return heapifyRecursive(nodeIndex, arrayToSort, arraySize);
 
             }
         }
@@ -421,15 +425,18 @@ public class sortingAlgorithms{
      *                   Could be sorted, in reverse order, or not
      * @return ArrayList that follows max heap rules.
      */
-    public ArrayList<Integer> heapifyIterative(ArrayList<Integer> arrayToSort){
+    public ArrayList<Integer> heapifyIterative(ArrayList<Integer>
+                                                       arrayToSort,
+                                               int arraySize
+                                               ){
 
         int parentIndex; // Parent index
         int tempInt;     // Placeholder to hold integer for swapping
 
         // Go through each node from index 1 since an index of 0 is the roor.
-        for (int childIndex = 1; childIndex < arrayToSort.size(); childIndex++){
+        for (int childIndex = 1; childIndex < arraySize; childIndex++){
 
-            parentIndex = floor((childIndex - 1) / 2);
+            parentIndex = (int) Math.floor((childIndex - 1) / 2);
 
             // Check the child (index i) against parent (index floor((i - 1)/2))
             // If child node is greater than the parent node, swap places
