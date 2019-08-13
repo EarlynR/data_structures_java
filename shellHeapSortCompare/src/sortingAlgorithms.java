@@ -131,6 +131,43 @@ public class sortingAlgorithms{
         return seqStartIndex;
     }
 
+
+    /**
+     * Simple insertion sort
+     *
+     * Sorts the entire algorithm once, starting with the 1st index of a
+     * zero-based index array. Similar to insertionSortInterval with a gap
+     * value of 1.
+     *
+     * Algorithm Code: Data Structures; ISBN: 978-1-5418-7704-7
+     *
+     * @param arrayToSort - an array of intergers. Could be sorted, random,
+     *                    or reversed
+     */
+    public void simpleInsertionSort(ArrayList<Integer> arrayToSort) {
+
+        int j;            // Allows you to move to the start of array
+        int tempInt;      // Placeholder to hold int for swap
+
+        for (int i = 1; i < arrayToSort.size(); ++i) {
+
+            j = i;
+
+            // Check if the element if smaller than the elements before it.
+            // Since it's smaller, move the value down to the proper location.
+            // Sorts in ascending order.
+            while (j > 0 && arrayToSort.get(j) < arrayToSort.get(j-1)) {
+
+                // Swap number
+                tempInt = arrayToSort.get(j);
+                arrayToSort.set(j, arrayToSort.get(j - 1));
+                arrayToSort.set(j - 1, tempInt);
+                --j;
+            }
+        }
+    }
+
+
     /**
      * Sort the algorithm using insertion sort. Insertion sort iterates though
      * an array, swapping as it goes through.
@@ -176,7 +213,7 @@ public class sortingAlgorithms{
      * @param arrayToSort - an unordered array
      * @return an array that is sorted using the shell sort algorithm.
      */
-    public ArrayList<Integer> shellSort(ArrayList<Integer> arrayToSort, int option){
+    public void shellSort(ArrayList<Integer> arrayToSort, int option){
 
         int startingIndexSeq; // Starting index for sequence.
                               // Two increments smaller than file size.
@@ -304,9 +341,6 @@ public class sortingAlgorithms{
 
                 break;
         }
-
-        return arrayToSort;
-
     }
 
 
@@ -316,7 +350,7 @@ public class sortingAlgorithms{
      * @param arrayToSort - an unordered array
      * @return an array that is sorted with the heap sort algorithm
      */
-    public ArrayList<Integer> heapSort(ArrayList<Integer> arrayToSort,
+    public void heapSort(ArrayList<Integer> arrayToSort,
                                        int arraySize){
 
         int tempInt; // Store number for swapping
@@ -324,7 +358,7 @@ public class sortingAlgorithms{
 
         // Heapify the array
 
-        arrayToSort = heapifyIterative(arrayToSort, arrayToSort.size());
+        heapifyIterative(arrayToSort, arrayToSort.size());
 
 
         // Sort the array by switching places
@@ -334,12 +368,9 @@ public class sortingAlgorithms{
             arrayToSort.set(0, arrayToSort.get(i));
             arrayToSort.set(i, tempInt);
 
-            arrayToSort = heapifyIterative(arrayToSort, i);
+            heapifyIterative(arrayToSort, i);
 
         }
-
-        return arrayToSort;
-
     }
 
     /**
@@ -412,6 +443,7 @@ public class sortingAlgorithms{
 
             }
         }
+
         return arrayToSort;
     }
 
@@ -425,7 +457,7 @@ public class sortingAlgorithms{
      *                   Could be sorted, in reverse order, or not
      * @return ArrayList that follows max heap rules.
      */
-    public ArrayList<Integer> heapifyIterative(ArrayList<Integer>
+    public void heapifyIterative(ArrayList<Integer>
                                                        arrayToSort,
                                                int arraySize
                                                ){
@@ -453,7 +485,5 @@ public class sortingAlgorithms{
 
             }
         }
-
-        return arrayToSort;
     }
 }
