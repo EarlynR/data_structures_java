@@ -73,6 +73,17 @@ public class sortingAlgorithms{
     }
 
     /**
+     * Print array contents
+     *
+     * @param arrayToPrint - array with elements to print out.
+     */
+    public void printArrayList(ArrayList<Integer> arrayToPrint){
+
+        System.out.println(Arrays.deepToString(arrayToPrint.toArray()));
+
+    }
+
+    /**
      * COPY an array list so the original one is not modified
      *
      * @param arrayToCopy - an arrayList to clone
@@ -357,7 +368,6 @@ public class sortingAlgorithms{
 
 
         // Heapify the array
-
         heapifyIterative(arrayToSort, arrayToSort.size());
 
 
@@ -453,36 +463,43 @@ public class sortingAlgorithms{
      * Modify the contents of the array so it follows a max heap structure
      * where no child is larger than the parent.
      *
+     * Code from: https://www.geeksforgeeks.org/iterative-heap-sort/
+     * Thank you.
+     *
      * @param arrayToSort - an array that does not follow max heap structure.
      *                   Could be sorted, in reverse order, or not
      * @return ArrayList that follows max heap rules.
      */
     public void heapifyIterative(ArrayList<Integer>
-                                                       arrayToSort,
-                                               int arraySize
-                                               ){
+                                         arrayToSort,
+                                 int arraySize){
 
-        int parentIndex; // Parent index
+
         int tempInt;     // Placeholder to hold integer for swapping
 
-        // Go through each node from index 1 since an index of 0 is the roor.
-        for (int childIndex = 1; childIndex < arraySize; childIndex++){
-
-            parentIndex = (int) Math.floor((childIndex - 1) / 2);
+        // Go through each node from index 1 since an index of 0 is the root.
+        for (int i = 1; i < arraySize; i++){
 
             // Check the child (index i) against parent (index floor((i - 1)/2))
             // If child node is greater than the parent node, swap places
-            if (arrayToSort.get(childIndex) > arrayToSort.get(parentIndex)){
+            if (arrayToSort.get(i) > arrayToSort.get((i-1)/2)){
 
-                // Get value of the child index
-                tempInt = arrayToSort.get(childIndex);
+                int j = i;
 
-                // Set the value of the child index to the parent index
-                arrayToSort.set(childIndex, arrayToSort.get(parentIndex));
+                while (arrayToSort.get(j) > arrayToSort.get( (j-1)/2) ){
 
-                // Set the value of the parent index to the child index
-                arrayToSort.set(parentIndex, tempInt);
+                    // Get value of the child index
+                    tempInt = arrayToSort.get(j);
 
+                    // Set the value of the child index to the parent index
+                    arrayToSort.set(j, arrayToSort.get( (j-1)/2) );
+
+                    // Set the value of the parent index to the child index
+                    arrayToSort.set( (j-1)/2, tempInt);
+
+                    j = (j - 1) / 2;
+
+                }
             }
         }
     }

@@ -7,17 +7,20 @@
  * different types of datasets.
  *
  * Inputs: 75 files
- * Outputs: 15 files,
+ * Outputs: 15 files
+ *
+ * Assumptions: All numbers in array are positive.
  *
  * Suggested improvements: Make array list into object to include name
+ *
 *
 */
 
 //TODO: Check if sorts are equal to make sure it's correct
-//TODO: Change return statements for methods that swap elements in place
-//TODO: Add code to only save results less than or equal to 50 records
 //TODO: Remove extraneous print statements
 //TODO: Add additional sequence to test
+//TODO: Take average of times for small datasets
+
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -139,6 +142,11 @@ public class sortData{
 
                 try{
 
+                    System.out.println("File name: " + file.getName());
+
+                    // Set up new array
+                    arrayInt = new ArrayList<Integer>();
+
                     // Set up a buffered reader for the contents in file
                     input = new BufferedReader(new FileReader(file));
 
@@ -180,6 +188,8 @@ public class sortData{
                     }
                 }
 
+
+
                 // Deep copy original array to arrays created for sorting
                 // algorithms
                 sortedHeap = sortEngine.copyArrayList(arrayInt);
@@ -189,6 +199,8 @@ public class sortData{
                 sortedShellSeq4 = sortEngine.copyArrayList(arrayInt);
                 sortedInsertion = sortEngine.copyArrayList(arrayInt);
 
+                System.out.println("Array Size: " + arrayInt.size());
+
                 // Sort data with heap sort
                 startTime = Instant.now();
                 sortEngine.heapSort(sortedHeap, arrayInt.size());
@@ -197,7 +209,7 @@ public class sortData{
                         (startTime, endTime);
                 System.out.println("Heap Sorted: ");
                 System.out.println("Time to Sort: " + timeDiffHeapSort);
-                System.out.println(Arrays.deepToString(sortedHeap.toArray()));
+
 
                 // Sort data with shell sort with first sequence
                 startTime = Instant.now();
@@ -205,9 +217,8 @@ public class sortData{
                 endTime = Instant.now();
                 timeDiffShellSort1 = mainEngine.calculateTimeDifference
                         (startTime, endTime);
-                System.out.println("Shell Sorted: ");
+                System.out.println("Shell Sorted (Sequence 1): ");
                 System.out.println("Time to Sort: " + timeDiffShellSort1);
-                System.out.println(Arrays.deepToString(sortedShellSeq1.toArray()));
 
                 // Sort data with shell sort with second sequence
                 startTime = Instant.now();
@@ -215,10 +226,9 @@ public class sortData{
                 endTime = Instant.now();
                 timeDiffShellSort2 = mainEngine.calculateTimeDifference
                         (startTime, endTime);
-                System.out.println("Shell Sorted: ");
+                System.out.println("Shell Sorted (Sequence 2): ");
                 System.out.println("Time to Sort: " + timeDiffShellSort2);
-                System.out.println(Arrays.deepToString
-                        (sortedShellSeq2.toArray()));
+
 
                 // Sort data with shell sort with third sequence
                 startTime = Instant.now();
@@ -226,11 +236,8 @@ public class sortData{
                 endTime = Instant.now();
                 timeDiffShellSort3 = mainEngine.calculateTimeDifference
                         (startTime, endTime);
-                System.out.println("Shell Sorted: ");
+                System.out.println("Shell Sorted (Sequence 3): ");
                 System.out.println("Time to Sort: " + timeDiffShellSort3);
-                System.out.println(Arrays.deepToString
-                        (sortedShellSeq3.toArray()));
-
 
                 // Sort data with shell sort with fourth sequence
                 startTime = Instant.now();
@@ -238,10 +245,8 @@ public class sortData{
                 endTime = Instant.now();
                 timeDiffShellSort4 = mainEngine.calculateTimeDifference
                         (startTime, endTime);
-                System.out.println("Shell Sorted: ");
+                System.out.println("Shell Sorted (Sequence 4): ");
                 System.out.println("Time to Sort: " + timeDiffShellSort4);
-                System.out.println(Arrays.deepToString
-                        (sortedShellSeq4.toArray()));
 
 
                 // Sort data with simple insertion sort
@@ -252,14 +257,58 @@ public class sortData{
                         (startTime, endTime);
                 System.out.println("Insertion Sorted: ");
                 System.out.println("Time to Sort: " + timeDiffInsertion);
-                System.out.println(Arrays.deepToString
-                        (sortedInsertion.toArray()));
+
+
+                /*
+                // Check if contents are correct.
+                // Allows me to see if the final array is sorted.
+                // Combination 6C2
+                System.out.println("Check Contents");
+                System.out.println(sortedHeap.equals(sortedShellSeq1));
+                System.out.println(sortedHeap.equals(sortedShellSeq2));
+                System.out.println(sortedHeap.equals(sortedShellSeq3));
+                System.out.println(sortedHeap.equals(sortedShellSeq4));
+                System.out.println(sortedHeap.equals(sortedInsertion));
+                System.out.println(sortedShellSeq1.equals(sortedShellSeq2));
+                System.out.println(sortedShellSeq1.equals(sortedShellSeq3));
+                System.out.println(sortedShellSeq1.equals(sortedShellSeq4));
+                System.out.println(sortedShellSeq1.equals(sortedInsertion));
+                System.out.println(sortedShellSeq2.equals(sortedShellSeq3));
+                System.out.println(sortedShellSeq2.equals(sortedShellSeq4));
+                System.out.println(sortedShellSeq2.equals(sortedInsertion));
+                System.out.println(sortedShellSeq3.equals(sortedShellSeq4));
+                System.out.println(sortedShellSeq3.equals(sortedInsertion));
+                System.out.println(sortedShellSeq4.equals(sortedInsertion));
+                */
+
+
+                System.out.println();
 
                 inputFileName = file.getName();
 
                 // Save results if file size is less than 50
                 if (arrayInt.size() <= 50){
 
+                    //Print Results
+                    System.out.println("Heap Sorted: ");
+                    sortEngine.printArrayList(sortedHeap);
+
+                    System.out.println("Shell Sorted (Sequence 1): ");
+                    sortEngine.printArrayList(sortedShellSeq1);
+
+                    System.out.println("Shell Sorted (Sequence 2): ");
+                    sortEngine.printArrayList(sortedShellSeq2);
+
+                    System.out.println("Shell Sorted (Sequence 3): ");
+                    sortEngine.printArrayList(sortedShellSeq3);
+
+                    System.out.println("Shell Sorted (Sequence 4): ");
+                    sortEngine.printArrayList(sortedShellSeq4);
+
+                    System.out.println("Insertion Sorted: ");
+                    sortEngine.printArrayList(sortedInsertion);
+
+                    // Write Results
                     mainEngine.writeResults(sortedHeap, "HeapSort",
                             timeDiffHeapSort,
                             inputFileName,
@@ -290,7 +339,6 @@ public class sortData{
                             args[1]);
 
                 }
-
             }
         }
     }
@@ -323,13 +371,11 @@ public class sortData{
 
             output = new BufferedWriter(fstream1);
 
-            output.write(message, 0, message.length());
-
             for (int i = 0; i < size; i++) {
 
-                output.newLine();
-
                 output.write(String.valueOf(sortedArray.get(i)));
+
+                output.newLine();
 
             }
 
@@ -359,11 +405,7 @@ public class sortData{
 
                 System.exit(2);
             }
-
-
         }
-
-
     }
 
     /**
@@ -380,9 +422,6 @@ public class sortData{
     public long calculateTimeDifference(Instant date1, Instant date2){
 
         long d = Duration.between( date1 , date2 ).toMillis();
-        System.out.println("Date 1: " + date1.getNano());
-        System.out.println("Date 2: " + date2.getNano());
-        System.out.println("Duration: " + d);
 
         return  d;
     }
